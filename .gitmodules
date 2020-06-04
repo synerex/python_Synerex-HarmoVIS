@@ -1,0 +1,9 @@
+[submodule "genproto/api"]
+	path = genproto/api
+	url = https://github.com/synerex/synerex_api
+[submodule "genproto/nodeapi"]
+	path = genproto/nodeapi
+	url = https://github.com/synerex/synerex_nodeapi
+[submodule "genproto/proto"]
+	path = genproto/proto
+	url = https://github.com/synerex/synerex_proto
