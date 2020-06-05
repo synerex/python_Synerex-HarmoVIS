@@ -77,6 +77,43 @@ class SxHarmoVIS:
         data = geo.Lines(lines = mylines, width= lines.width, color = colors)
         return await self.notifySupply('Lines',data)
 
+    async def drawArcsAsync(self, arcstore):
+        src =[]
+        tgt =[]
+        srcCol = []
+        tgtCol = []
+        tilt = []
+        for a in arcstore.arcs:
+            src.append( geo.Point(lat=a[0],lon=a[1]))
+            tgt.append( geo.Point(lat=a[2],lon=a[3]))
+            srcCol.append( a[4])
+            tgtCol.append( a[5])
+            tilt.append( a[6])
+        data = geo.Arcs(srcs = src, tgts = tgt, 
+                        src_cols = srcCol, 
+                        tgt_cols = tgtCol,
+                        tilts = tilt
+        )
+        return await self.notifySupply('Arcs',data)
+
+    async def drawScattersAsync(self, scstore):
+        point =[]
+        radius =[]
+        fillCol = []
+        lineCol = []
+        for s in scstore.scs:
+            point.append( geo.Point(lat=s[0],lon=s[1]))
+            radius.append( s[2])
+            fillCol.append( s[3])
+            lineCol.append( s[4])
+        data = geo.Scatters(points = point,
+                        radiuses = radius, 
+                        fill_colors = fillCol, 
+                        line_colors = lineCol
+        )
+        return await self.notifySupply('Scatters',data)
+
+
 class LineStore:
     def __init__(self):
         self.lines = []
@@ -87,6 +124,21 @@ class LineStore:
 
     def addLine(self,lat0,lon0,lat1,lon1, color = 0x708080):
         self.lines.append([[lat0,lon0],[lat1,lon1], color])
+
+class ArcStore:
+    def __init__(self):
+        self.arcs = []
+    
+    def addArc(self,lat0,lon0,lat1,lon1, srcCol = 0xd0c000, tgtCol = 0xb0a000, tilt = 0):
+        self.arcs.append([lat0,lon0,lat1,lon1, srcCol, tgtCol, tilt])
+
+class ScatterStore:
+    def __init__(self):
+        self.scs = []
+    
+    def addScatter(self,lat,lon,radius, fillCol = 0xd000f0, lineCol = 0x200020):
+        self.scs.append([lat,lon,radius, fillCol, lineCol])
+
 
 class BGStore:
     def __init__(self):
@@ -166,6 +218,18 @@ async def drawLinesAx(ln):
     srv.close()
     return res
 
+async def drawArcsAx(ln):
+    srv = SxHarmoVIS()
+    res = await srv.drawArcsAsync(ln)
+    srv.close()
+    return res
+
+async def drawScattersAx(ln):
+    srv = SxHarmoVIS()
+    res = await srv.drawScattersAsync(ln)
+    srv.close()
+    return res
+
 
 def sendBearing(b):
     return asyncio.run(sendBearingAx(b))
@@ -182,4 +246,9 @@ def sendBarGraphs(bg):
 def drawLines(ln):
     return asyncio.run(drawLinesAx(ln))
 
-    
+def drawArcs(ln):
+    return asyncio.run(drawArcsAx(ln))
+
+def drawScatters(ln):
+    return asyncio.run(drawScattersAx(ln))
+

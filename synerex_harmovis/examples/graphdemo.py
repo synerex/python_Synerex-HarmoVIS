@@ -52,6 +52,18 @@ def updateRandomGraph(bgstore):
         )
     sx.sendBarGraphs(bgstore)
 
+def drawRandomArc(count = 20):
+    arcs = sx.ArcStore()
+    for i in range(count):
+        arcs.addArc(
+            lat0 = 34.8592285+0.02*random.random(),
+            lon0 =136.816348+0.02*random.random(),
+            lat1 = 34.8592285+0.02*random.random(),
+            lon1 =136.816348+0.02*random.random(),
+        )
+    sx.drawArcs(arcs)
+
+
 def main0():   #graph demo
     bars = drawRandomGraph(3,10)
     for i in range(20):

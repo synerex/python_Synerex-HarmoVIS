@@ -8,6 +8,7 @@ from typing import List, Optional
 import betterproto
 import grpclib
 
+
 class NodeType(betterproto.Enum):
     PROVIDER = 0
     SERVER = 1

@@ -16,7 +16,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='synerex_harmovis', 
-    version='0.3.0',
+    version='0.3.1',
     description='Python library for Synerex and HarmoViS',  
     long_description=long_description, 
     long_description_content_type='text/markdown', 

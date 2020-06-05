@@ -63,10 +63,22 @@ class Paths(betterproto.Message):
 
 
 @dataclass
-class Scatter(betterproto.Message):
+class Arcs(betterproto.Message):
+    srcs: List["Point"] = betterproto.message_field(1)
+    tgts: List["Point"] = betterproto.message_field(2)
+    src_cols: List[int] = betterproto.int32_field(3)
+    tgt_cols: List[int] = betterproto.int32_field(4)
+    tilts: List[int] = betterproto.int32_field(5)
+
+
+@dataclass
+class Scatters(betterproto.Message):
     points: List["Point"] = betterproto.message_field(1)
     radiuses: List[int] = betterproto.int32_field(2)
-    color: List[int] = betterproto.int32_field(3)
+    fill_colors: List[int] = betterproto.int32_field(3)
+    line_colors: List[int] = betterproto.int32_field(4)
+    line_width: int = betterproto.int32_field(5)
+    fill_alpha: int = betterproto.int32_field(6)
 
 
 @dataclass
