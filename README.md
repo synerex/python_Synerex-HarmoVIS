@@ -1,5 +1,5 @@
 # python_Synerex-HarmoVIS
 Python library for using Synerex-HarmoVIS_Client with Proxy
 
-  pip install synerex-harmovis
+  pip install synerex_harmovis
  

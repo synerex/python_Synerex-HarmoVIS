@@ -1,4 +1,3 @@
-google.protobuf.timestamp_pb2
-google.protobuf
+betterproto
 grpclib
 

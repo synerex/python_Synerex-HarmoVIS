@@ -1,8 +1,4 @@
-"""A setuptools based setup module.
-
-See:
-https://packaging.python.org/guides/distributing-packages-using-setuptools/
-https://github.com/pypa/sampleproject
+""" Synerex_HarmoVIS package
 """
 
 # Always prefer setuptools over distutils
@@ -19,7 +15,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='synerex-harmovis', 
+    name='synerex_harmovis', 
     version='0.3.0',
     description='Python library for Synerex and HarmoViS',  
     long_description=long_description, 
@@ -31,7 +27,7 @@ setup(
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Topic :: Scientific/Engineering :: Visualization',
-        'License :: OSI Approved :: Apache-2.0 License',
+        'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
@@ -39,9 +35,8 @@ setup(
     ],
 
     keywords='visualization synerex harmoware-vis',
-    package_dir={'': 'src'}, 
-    packages=find_packages(where='src'),  
-    python_requires='>=3.5, <4',
+    packages=['synerex_harmovis', 'synerex_harmovis.proto', 'synerex_harmovis.examples'],
+    python_requires='>=3.7, <4',
 
     install_requires=_requires_from_file('requirements.txt'),
     
@@ -70,11 +65,11 @@ setup(
     #
     # For example, the following would provide a command called `sample` which
     # executes the function `main` from this package when invoked:
-    entry_points={  # Optional
-        'console_scripts': [
-            'sample=sample:main',
-        ],
-    },
+#    entry_points={  # Optional
+#        'console_scripts': [
+#            'graphdemo=graphdemo:main',
+#        ],
+#    },
 
     project_urls={  # Optional
         'Bug Reports': 'https://github.com/synerex/python_Synerex-HarmoVIS/issues',

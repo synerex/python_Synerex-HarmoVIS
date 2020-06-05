@@ -1,11 +1,9 @@
 from datetime import datetime 
+import asyncio
+from grpclib.client import Channel
 
 from .proto import api
 from .proto import geography as geo
-
-from grpclib.client import Channel
-
-import asyncio
 
 class SxHarmoVIS:
     ''' SxHarmoVIS: base class for Synerex-HarmoVIS integration
