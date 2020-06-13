@@ -19,7 +19,12 @@ from synerex_harmovis.sxharmovis import (
     sendBearingAx,
     sendPitchAx,
     sendViewStateAx,
-    sendBarGraphsAx
+    sendBarGraphsAx,
+    sendTopTextLabelAx,
+    clearArcAx,
+    clearScatterAx,
+    clearArc,
+    clearSccater
 )
 
 import synerex_harmovis.proto.geography as geo

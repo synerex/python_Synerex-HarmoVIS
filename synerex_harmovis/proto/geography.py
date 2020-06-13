@@ -82,6 +82,12 @@ class Scatters(betterproto.Message):
 
 
 @dataclass
+class TopTextLabel(betterproto.Message):
+    label: str = betterproto.string_field(1)
+    style: str = betterproto.string_field(2)
+
+
+@dataclass
 class ViewState(betterproto.Message):
     lat: float = betterproto.double_field(1)
     lon: float = betterproto.double_field(2)
@@ -101,6 +107,16 @@ class Pitch(betterproto.Message):
 
 @dataclass
 class ClearMoves(betterproto.Message):
+    message: str = betterproto.string_field(1)
+
+
+@dataclass
+class ClearScatters(betterproto.Message):
+    message: str = betterproto.string_field(1)
+
+
+@dataclass
+class ClearArcs(betterproto.Message):
     message: str = betterproto.string_field(1)
 
 

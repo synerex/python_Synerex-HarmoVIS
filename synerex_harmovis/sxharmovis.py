@@ -30,8 +30,8 @@ class SxHarmoVIS:
         )
 
 
-    async def sendViewStateAsync(self, lat, lon, zoom):
-        data = geo.ViewState(lat = lat, lon = lon , zoom= zoom) 
+    async def sendViewStateAsync(self, lat, lon, zoom = -1, pitch = -1):
+        data = geo.ViewState(lat = lat, lon = lon , zoom= zoom, pitch=pitch) 
         return await self.notifySupply('ViewState',data)
 
     async def sendPitchAsync(self, pitch):
@@ -46,11 +46,13 @@ class SxHarmoVIS:
         mybars =[]
         for b in bs.bars:
             bd = []
+            ct = 0
             for d in b["barData"]:
                 if type(d) is list:
                     bd0=geo.BarData(value = d[0],color = d[1])
                 else:
-                    bd0=geo.BarData(value = d, color = 0x00f000)
+                    bd0=geo.BarData(value = d, color = bs.barColors[ct])
+                    ct = ct + 1
                 bd.append(bd0)
             mybars.append(geo.BarGraph(id=b["id"], ts=b["ts"],
                                        color_type= b["colorType"],
@@ -113,6 +115,20 @@ class SxHarmoVIS:
         )
         return await self.notifySupply('Scatters',data)
 
+    async def sendTopTextLabelAsync(self, label, style):
+        data = geo.TopTextLabel(
+            label = label,
+            style = style
+        )
+        return await self.notifySupply('TopTextLabel',data)
+    
+    async def sendClearArcAsync(self):
+        data = geo.ClearArc()
+        return await self.nofitySupply('ClearArc',data)
+
+    async def sendClearScatterAsync(self):
+        data = geo.ClearScatter()
+        return await self.nofitySupply('ClearScatter',data)
 
 class LineStore:
     def __init__(self):
@@ -143,6 +159,7 @@ class ScatterStore:
 class BGStore:
     def __init__(self):
         self.bars = []
+        self.barColors = [0xf00000, 0x00f000, 0x0000f0, 0xe0e000, 0xe000e0, 0x00e0e0]
         self.idbase = 0
         self.colorType = geo.BarColorType.VARCOLOR
         self.shapeType = geo.BarShapeType.HEX
@@ -200,9 +217,9 @@ async def sendPitchAx(p):
     srv.close()
     return res
 
-async def sendViewStateAx(lat,lon,zoom):
+async def sendViewStateAx(lat,lon,zoom=-1, pitch=-1):
     srv = SxHarmoVIS()
-    res = await srv.sendViewStateAsync(lat,lon,zoom)
+    res = await srv.sendViewStateAsync(lat,lon,zoom,pitch)
     srv.close()
     return res
 
@@ -230,6 +247,25 @@ async def drawScattersAx(ln):
     srv.close()
     return res
 
+async def clearArcsAx():
+    srv = SxHarmoVIS()
+    res = await srv.sendClearArcAsync()
+    srv.close()
+    return res
+
+async def clearScattersAx():
+    srv = SxHarmoVIS()
+    res = await srv.sendClearScatterAsync()
+    srv.close()
+    return res
+
+
+
+async def sendTopTextLabelAx(label, style):
+    srv = SxHarmoVIS()
+    res = await srv.sendTopTextLabelAsync(label, style)
+    srv.close()
+    return res
 
 def sendBearing(b):
     return asyncio.run(sendBearingAx(b))
@@ -237,8 +273,8 @@ def sendBearing(b):
 def sendPitch(p):
     return asyncio.run(sendPitchAx(p))
 
-def sendViewState(lat,lon,zoom):
-    return asyncio.run(sendViewStateAx(lat,lon,zoom))
+def sendViewState(lat,lon,zoom=-1, pitch=-1):
+    return asyncio.run(sendViewStateAx(lat,lon,zoom,pitch))
 
 def sendBarGraphs(bg):
     return asyncio.run(sendBarGraphsAx(bg))
@@ -251,4 +287,13 @@ def drawArcs(ln):
 
 def drawScatters(ln):
     return asyncio.run(drawScattersAx(ln))
+
+def sendTopTextLabel(label, style):
+    return asyncio.run(sendTopTextLabelAx(label,style))
+
+def clearArc():
+    return asyncio.run(clearArcAx())
+
+def clearScatter():
+    return asyncio.run(clearScatterAx())
 

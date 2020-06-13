@@ -5,8 +5,6 @@ import time
 
 import asyncio
 
-colors = [0xf00000,0x00f000,0x0000f0]
-
 
 def drawRandomLine(count = 20):
     lines = sx.LineStore()
@@ -28,7 +26,7 @@ def drawRandomGraph(n=3, count = 10):
     for i in range(count):
         bd = []
         for j in range(n):
-            bd.append([int(100*random.random()), colors[j]])
+            bd.append(int(100*random.random()))
         id = bars.addBarDataNow(
             label = "Sample"+str(i),
             lat = 34.8592285+0.01*random.random(),
@@ -84,8 +82,13 @@ def main2():
         p = (p % 60 )+ 3
         b +=5
         time.sleep(0.1)
+        sx.send
+    
 
 if __name__ == "__main__":
     print("Start Graphdemo for Synerex-Harmovis")
     main0()
 
+    main1()
+
+    main2()
