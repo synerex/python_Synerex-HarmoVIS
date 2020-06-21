@@ -190,7 +190,7 @@ class MeshStore:
 
     def updateMeshValue(self,itemId,value,color="[0,200,0]"):
         last = self.meshItems[itemId]
-        self.meshItems[itemId]=[last[0],last[1],last[2],last[3]]
+        self.meshItems[itemId]=[last[0],last[1],value,color]
 
     def getItemIds(self):
         return self.meshItems.keys()
