@@ -91,18 +91,21 @@ class TopTextLabel(betterproto.Message):
 class ViewState(betterproto.Message):
     lat: float = betterproto.double_field(1)
     lon: float = betterproto.double_field(2)
-    zoom: int = betterproto.int32_field(3)
+    zoom: float = betterproto.double_field(3)
     pitch: float = betterproto.double_field(4)
+    duration: float = betterproto.double_field(5)
 
 
 @dataclass
 class Bearing(betterproto.Message):
     bearing: float = betterproto.double_field(1)
+    duration: float = betterproto.double_field(2)
 
 
 @dataclass
 class Pitch(betterproto.Message):
     pitch: float = betterproto.double_field(1)
+    duration: float = betterproto.double_field(2)
 
 
 @dataclass
@@ -148,3 +151,8 @@ class BarGraph(betterproto.Message):
 @dataclass
 class BarGraphs(betterproto.Message):
     bars: List["BarGraph"] = betterproto.message_field(1)
+
+
+@dataclass
+class HarmoVIS(betterproto.Message):
+    conf_json: str = betterproto.string_field(1)

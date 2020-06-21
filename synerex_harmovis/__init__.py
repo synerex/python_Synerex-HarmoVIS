@@ -5,6 +5,7 @@ from synerex_harmovis.sxharmovis import (
     LineStore,
     BGStore,
     ArcStore,
+    MeshStore,
     ScatterStore,
     sendBearing,
     sendPitch,
@@ -21,10 +22,15 @@ from synerex_harmovis.sxharmovis import (
     sendViewStateAx,
     sendBarGraphsAx,
     sendTopTextLabelAx,
-    clearArcAx,
-    clearScatterAx,
-    clearArc,
-    clearSccater
+    sendTopTextLabel,
+    clearArcsAx,
+    clearArcs,
+    clearScattersAx,
+    clearScatters,
+    sendHarmoVISAx,
+    sendHarmoVIS,
+    sendMeshAx,
+    sendMesh    
 )
 
 import synerex_harmovis.proto.geography as geo
