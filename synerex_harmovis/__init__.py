@@ -6,6 +6,7 @@ from synerex_harmovis.sxharmovis import (
     BGStore,
     ArcStore,
     MeshStore,
+    PolygonStore,
     ScatterStore,
     sendBearing,
     sendPitch,
@@ -30,7 +31,9 @@ from synerex_harmovis.sxharmovis import (
     sendHarmoVISAx,
     sendHarmoVIS,
     sendMeshAx,
-    sendMesh    
+    sendMesh,
+    sendPolygonAx,
+    sendPolygon    
 )
 
 import synerex_harmovis.proto.geography as geo

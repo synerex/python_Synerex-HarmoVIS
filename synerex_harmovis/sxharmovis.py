@@ -137,6 +137,9 @@ class SxHarmoVIS:
     async def sendMeshAsync(self, ms):
         return await self.sendHarmoVISAsync(ms.getJsonStr())
 
+    async def sendPolygonAsync(self, ps):
+        return await self.sendHarmoVISAsync(ps.getJsonStr())
+
 
 class LineStore:
     def __init__(self):
@@ -201,6 +204,38 @@ class MeshStore:
             mistr = mistr + "{" + ('\"pos\":[{},{}],\"val\":{},\"col\":{}'.format(s[1],s[0],s[2], s[3])) +"},"
         meshData = '\"id\":{},\"timestamp\":{}, \"meshItems\":[{}]'.format(self.id, self.timestamp, mistr[:-1])
         jsonConf = '{\"addMesh\":{'+meshData+'}}'
+        return jsonConf
+
+class PolygonStore:
+    def __init__(self):
+        self.id = 1000000
+        self.count = 0
+        self.polygonItems = {}
+
+    def setPolygonID(self, id):
+        self.id = id
+
+    def addPolygonItem(self,contour,linecolor=[0,200,0],fillcolor=[0,200,0],elevation=0, itemId = -1):
+        if( itemId < 0):
+            itemId = self.count
+            self.count += 1
+            while (itemId in self.polygonItems):
+                itemId = self.count
+                self.count += 1
+        self.polygonItems[itemId]=[contour,linecolor,fillcolor,elevation]
+
+    def updatePolygonValue(self,itemId,linecolor=[0,200,0],fillcolor=[0,200,0],elevation=0):
+        last = self.polygonItems[itemId]
+        self.polygonItems[itemId]=[last[0],linecolor,fillcolor,elevation]
+
+    def getItemIds(self):
+        return self.polygonItems.keys()
+
+    def getJsonStr(self):
+        pistr = ""        
+        for id,s in self.polygonItems.items():
+            pistr = pistr + "{" + ('\"id\":{},\"polygon\":{},\"linecolor\":{},\"fillcolor\":{},\"elevation\":{}'.format(id,str(s[0]),str(s[1]),str(s[2]),s[3])) +"},"
+        jsonConf = "{"+('\"addPoly\":[{}]'.format(pistr[:-1]))+"}"
         return jsonConf
 
 class BGStore:
@@ -324,6 +359,12 @@ async def sendMeshAx(mesh):
     srv.close()
     return res
 
+async def sendPolygonAx(polygon):
+    srv = SxHarmoVIS()
+    res = await srv.sendPolygonAsync(polygon)
+    srv.close()
+    return res
+
 
 def sendBearing(b, duration = 0):
     return asyncio.run(sendBearingAx(b, duration))
@@ -360,3 +401,6 @@ def sendHarmoVIS(jsonStr):
 
 def sendMesh(mesh):
     return asyncio.run(sendMeshAx(mesh))
+
+def sendPolygon(polygon):
+    return asyncio.run(sendPolygonAx(polygon))
